@@ -1,2 +1,2 @@
 # Bookique_animaniacs  
-ciao
+Repository del progetto

@@ -1,5 +1,9 @@
-RewriteEngine On
+RewriteEngine on
+
 RewriteBase /
-RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteCond %{REQUEST_FILENAME} !-l
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.+)$ index.php [QSA,L]
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^(.*)$ /Bookique_animaniacs/index.php [QSA,L]

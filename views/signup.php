@@ -14,31 +14,27 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $username_err = "Please enter a username.";
     } else{
         // Prepare a select statement
-        $sql = "SELECT id FROM users WHERE username = ?";
-        
+        $sql = "SELECT user_id FROM users WHERE username = ?";
         if($stmt = mysqli_prepare($link, $sql)){
               // Set parameters
             $param_username = trim($_POST["username"]);
             // Bind variables to the prepared statement as parameters
             mysqli_stmt_bind_param($stmt, "s", $param_username);
-            
-            
-            // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
                 /* store result */
                 mysqli_stmt_store_result($stmt);
-                
                 if(mysqli_stmt_num_rows($stmt) == 1){
-                    $username_err = "This username is already taken.";
+                    $username_err = "Questo utente esiste già.";
                 } else{
                     $username = trim($_POST["username"]);
                 }
             } else{
                 echo "Oops! Something went wrong. Please try again later.";
             }
-
             // Close statement
             mysqli_stmt_close($stmt);
+        }else{
+            echo 'oh no';
         }
     }
      /* // Validate email
@@ -46,7 +42,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $email_err = "Please enter an email.";
     } else{
         // Prepare a select statement
-        $sql = "SELECT id FROM users WHERE email = ?";
+        $sql = "SELECT user_id FROM users WHERE email = ?";
         
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
@@ -79,7 +75,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $name_err = "please enter a nome.";
     }else{
         //prepare a select statement
-        $sql = "SELECT id FROM users WHERE nome = ?";
+        $sql = "SELECT user_id FROM users WHERE nome = ?";
 
         if($stmt = mysqli_prepare($link, $sql)){
             
@@ -98,54 +94,42 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $email_err = "Please enter an email.";     
     } else{
         // Prepare a select statement
-        $sql = "SELECT id FROM users WHERE email = ?";
-        
+        $sql = "SELECT user_id FROM users WHERE email = ?";
         if($stmt = mysqli_prepare($link, $sql)){
             //if the connection is ok set parameters
-            $param_username = trim($_POST["username"]);
-
-            mysqli_stmt_bind_param($stmt, "s", $param_username);
-
+            $param_username = trim($_POST["email"]);
+            mysqli_stmt_bind_param($stmt, "s", $param_email);
             if(mysqli_stmt_execute($stmt)){
-                
+
             }
-
-
         }
-
-        
-        
         $email = trim($_POST["email"]);
     }
 
     if(empty(trim($_POST["nome"]))){
-        $nome_err = "Please enter a name.";     
+        $nome_err = "Inserire un nome.";
     } else{
         $nome = trim($_POST["nome"]);
     }
 
     if(empty(trim($_POST["cognome"]))){
-        $cognome_err = "Please enter a surname.";     
+        $cognome_err = "Inserire un cognome.";
     } else{
         $cognome = trim($_POST["cognome"]);
     }
 
-
-
-
-
     // Validate password
     if(empty(trim($_POST["password"]))){
-        $password_err = "Please enter a password.";     
-    } elseif(strlen(trim($_POST["password"])) < 6){
-        $password_err = "Password must have atleast 6 characters.";
+        $password_err = "Inserire una password.";
+    } elseif(strlen(trim($_POST["password"])) < 8){
+        $password_err = "La password deve avere almeno 8 caratteri.";
     } else{
         $password = trim($_POST["password"]);
     }
     
     // Validate confirm password
     if(empty(trim($_POST["confirm_password"]))){
-        $confirm_password_err = "Please confirm password.";     
+        $confirm_password_err = "Inserire la conferma della password.";
     } else{
         $confirm_password = trim($_POST["confirm_password"]);
         if(empty($password_err) && ($password != $confirm_password)){
@@ -155,7 +139,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     
     // Check input errors before inserting in database
     if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($email_err) && empty($nome_err) && empty($cognome_err)){
-        
         // Prepare an insert statement
         $sql = "INSERT INTO users (username, email, password, nome, cognome) VALUES (?, ?, ?, ?, ?)";
          
@@ -164,7 +147,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             mysqli_stmt_bind_param($stmt, "sssss", $param_username, $param_email, $param_password, $param_nome, $param_cognome );
             
             // Set parameters
-            $param_username = $username;
+            $param_username = $_POST['username'];
             $param_email = $email;
             $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
             $param_nome = $nome;
@@ -174,16 +157,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
                 // Redirect to login page
-                header("location: login.php");
+                header("location: login");
             } else{
                 echo "Something went wrong. Please try again later.";
             }
-
             // Close statement
             mysqli_stmt_close($stmt);
         }
     }
-    
     // Close connection
     mysqli_close($link);
 }
@@ -204,7 +185,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <div class="wrapper">
         <h2>Sign Up</h2>
         <p>Please fill this form to create an account.</p>
-        <form action="registration.php" method="post">
+        <form action="signup" method="post">
             <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
                 <label>Username</label>
                 <input type="text" name="username" class="form-control" value="<?php echo $username; ?>">
@@ -239,7 +220,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <input type="submit" class="btn btn-primary" value="Submit">
                 <input type="reset" class="btn btn-default" value="Reset">
             </div>
-            <p>Already have an account? <a href="login.php">Login here</a>.</p>
+            <p>Hai già un account? <a href="login">Login</a>.</p>
         </form>
     </div>    
 </body>

@@ -14,32 +14,39 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate username
     if(empty(trim($_POST["username"]))){
         $username_err = "Please enter a username.";
-    } else {
+    } else{
         // Prepare a select statement
         $sql = "SELECT user_id FROM users WHERE username = ?";
+        
+        
         if($stmt = mysqli_prepare($link, $sql)){
               // Set parameters
             $param_username = trim($_POST["username"]);
             // Bind variables to the prepared statement as parameters
             mysqli_stmt_bind_param($stmt, "s", $param_username);
+
+            
+            // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
                 /* store result */
+            
                 mysqli_stmt_store_result($stmt);
+                
                 if(mysqli_stmt_num_rows($stmt) == 1){
-                    $username_err = "Questo utente esiste già.";
+                    $username_err = "This username is already taken.";
                 } else{
                     $username = trim($_POST["username"]);
+                    
                 }
             } else{
                 echo "Oops! Something went wrong. Please try again later.";
             }
+
             // Close statement
             mysqli_stmt_close($stmt);
-        }else{
-            echo 'oh no';
         }
     }
-     /* // Validate email
+     /// Validate email
       if(empty(trim($_POST["email"]))){
         $email_err = "Please enter an email.";
     } else{
@@ -54,14 +61,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $param_email= trim($_POST["email"]);
             
             // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){*/
-                /* store result */
-               /* mysqli_stmt_store_result($stmt);
+            if(mysqli_stmt_execute($stmt)){
+                /*store result */
+                mysqli_stmt_store_result($stmt);
                 
                 if(mysqli_stmt_num_rows($stmt) == 1){
                     $email_err = "This email is already taken.";
                 } else{
                     $email = trim($_POST["email"]);
+                    
                 }
             } else{
                 echo "Oops! Something went wrong. Please try again later.";
@@ -71,102 +79,72 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             mysqli_stmt_close($stmt);
         }
     }
-    
-   //validate name
-  /*  if(empty(trim($_POST["nome"]))){
-        $name_err = "please enter a nome.";
-    }else{
-        //prepare a select statement
-        $sql = "SELECT user_id FROM users WHERE nome = ?";
 
-        if($stmt = mysqli_prepare($link, $sql)){
-            
-            mysqli_stmt_bind_param($stmt, "s", $param_nome)
-
-            $param_nome=trim($_POST["nome"]);
-
-            if(mysqli_stmt_execute($stmt)){
-
-                mysqli_stmt_store_result($stmt);
-            }
-        }
-    }*/
-
-    if(empty(trim($_POST["email"]))){
-        $email_err = "Please enter an email.";     
-    } else{
-        // Prepare a select statement
-        $sql = "SELECT user_id FROM users WHERE email = ?";
-        if($stmt = mysqli_prepare($link, $sql)){
-            //if the connection is ok set parameters
-            $param_username = trim($_POST["email"]);
-            mysqli_stmt_bind_param($stmt, "s", $param_email);
-            if(mysqli_stmt_execute($stmt)){
-
-            }
-        }
-        $email = trim($_POST["email"]);
-    }
-
+    //validate nome
     if(empty(trim($_POST["nome"]))){
-        $nome_err = "Inserire un nome.";
+        $nome_err = "Please enter a name.";     
     } else{
         $nome = trim($_POST["nome"]);
     }
 
+    //validate cognome
     if(empty(trim($_POST["cognome"]))){
-        $cognome_err = "Inserire un cognome.";
+        $cognome_err = "Please enter a surname.";     
     } else{
         $cognome = trim($_POST["cognome"]);
     }
 
     // Validate password
     if(empty(trim($_POST["password"]))){
-        $password_err = "Inserire una password.";
-    } elseif(strlen(trim($_POST["password"])) < 8){
-        $password_err = "La password deve avere almeno 8 caratteri.";
+        $password_err = "Please enter a password.";     
+    } elseif(strlen(trim($_POST["password"])) < 1){
+        $password_err = "Password must have atleast 8 characters.";
     } else{
         $password = trim($_POST["password"]);
     }
-    
+
     // Validate confirm password
     if(empty(trim($_POST["confirm_password"]))){
-        $confirm_password_err = "Inserire la conferma della password.";
+        $confirm_password_err = "Please confirm password.";     
     } else{
         $confirm_password = trim($_POST["confirm_password"]);
-        if(empty($password_err) && ($password != $confirm_password)){
+        if((empty($password_err)) && ($password != $confirm_password)){
             $confirm_password_err = "Password did not match.";
         }
     }
-    
+
     // Check input errors before inserting in database
-    if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($email_err) && empty($nome_err) && empty($cognome_err)){
+    if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($email_err) && empty($nome_err) && empty($cognome_err))
+    {
         // Prepare an insert statement
-        $sql = "INSERT INTO users (username, email, password, nome, cognome) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO users (username, email, password, nome, cognome, ut_type) VALUES (?, ?, ?, ?, ?, ?)";
          
-        if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "sssss", $param_username, $param_email, $param_password, $param_nome, $param_cognome );
-            
-            // Set parameters
-            $param_username = $_POST['username'];
-            $param_email = $email;
-            $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
-            $param_nome = $nome;
-            $param_cognome = $cognome;
-            
-            
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                // Redirect to login page
-                header("location: login");
-            } else{
-                echo "Something went wrong. Please try again later.";
-            }
-            // Close statement
-            mysqli_stmt_close($stmt);
+        $stmt = $link->prepare($sql);
+        // Bind variables to the prepared statement as parameters
+        $stmt->bind_param("sssssi", $param_username, $param_email, $param_password, $param_nome, $param_cognome, $param_role );
+
+        // Set parameters
+        $param_username = $_POST['username'];
+        $param_email = $email;
+        $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
+        $param_nome = $nome;
+        $param_cognome = $cognome;
+        $param_role = $_POST['role-radio'];
+        
+        
+        // Attempt to execute the prepared statement
+        $exe = $stmt->execute();
+        if($exe){
+            // Redirect to login page
+            header("location: login");
+        } else {
+            echo "Something went wrong. Please try again later.";
         }
+        // Close statement
+        mysqli_stmt_close($stmt);
+
     }
+
     // Close connection
     mysqli_close($link);
 }
@@ -229,15 +207,16 @@ $isEditor=false;
 
                         <div class="form-group">
                             
-                        <div class="container-checkbox">
-                            <input class="input" type="radio" id="test1" name="radio-group" checked hidden>
-                            <label class="btn" for="test1">Lettore</label>
-                            <span class="span"></span>
-                        </div>
-                        <div class="container-checkbox">
-                            <input class="input" type="radio" id="test2" name="radio-group" hidden>
-                            <label class="btn" for="test2">Casa editrice</label>
-                            <span class="span"></span>
+                            <div class="container-checkbox">
+                                <input class="input" type="radio" id="test1" name="role-radio" value="2" checked hidden>
+                                <label class="btn" for="test1">Lettore</label>
+                                <span class="span"></span>
+                            </div>
+
+                            <div class="container-checkbox">
+                                <input class="input" type="radio" id="test2" name="role-radio" false="1" hidden>
+                                <label class="btn" for="test2">Casa editrice</label>
+                                <span class="span"></span>
                             </div>
                         </div>
 

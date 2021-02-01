@@ -6,13 +6,15 @@ require_once "config.php";
 $username = $password = $confirm_password = $email = $nome = $cognome ="";
 $username_err = $password_err = $confirm_password_err = $email_err = $nome_err = $cognome_err = "";
  
+
+
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
  
     // Validate username
     if(empty(trim($_POST["username"]))){
         $username_err = "Please enter a username.";
-    } else{
+    } else {
         // Prepare a select statement
         $sql = "SELECT user_id FROM users WHERE username = ?";
         if($stmt = mysqli_prepare($link, $sql)){
@@ -168,6 +170,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Close connection
     mysqli_close($link);
 }
+
+$isEditor=false;
+
+
 ?>
  
 <!DOCTYPE html>
@@ -175,53 +181,80 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <head>
     <meta charset="UTF-8">
     <title>Sign Up</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
-    <style type="text/css">
-        body{ font: 14px sans-serif; }
-        .wrapper{ width: 350px; padding: 20px; }
-    </style>
 </head>
 <body>
-    <div class="wrapper">
-        <h2>Sign Up</h2>
-        <p>Please fill this form to create an account.</p>
-        <form action="signup" method="post">
-            <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
-                <label>Username</label>
-                <input type="text" name="username" class="form-control" value="<?php echo $username; ?>">
-                <span class="help-block"><?php echo $username_err; ?></span>
-            </div>    
-            <div class="form-group <?php echo (!empty($nome_err)) ? 'has-error' : ''; ?>">
-                <label>nome</label>
-                <input type="text" name="nome" class="form-control" value="<?php echo $nome; ?>">
-                <span class="help-block"><?php echo $nome_err; ?></span>
-            </div> 
-            <div class="form-group <?php echo (!empty($cognome_err)) ? 'has-error' : ''; ?>">
-                <label>cognome</label>
-                <input type="text" name="cognome" class="form-control" value="<?php echo $cognome; ?>">
-                <span class="help-block"><?php echo $cognome_err; ?></span>
-            </div>     
-            <div class="form-group <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
-                <label>email</label>
-                <input type="text" name="email" class="form-control" value="<?php echo $email; ?>">
-                <span class="help-block"><?php echo $email_err; ?></span>
-            </div>   
-            <div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
-                <label>Password</label>
-                <input type="password" name="password" class="form-control" value="<?php echo $password; ?>">
-                <span class="help-block"><?php echo $password_err; ?></span>
-            </div>
-            <div class="form-group <?php echo (!empty($confirm_password_err)) ? 'has-error' : ''; ?>">
-                <label>Confirm Password</label>
-                <input type="password" name="confirm_password" class="form-control" value="<?php echo $confirm_password; ?>">
-                <span class="help-block"><?php echo $confirm_password_err; ?></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Submit">
-                <input type="reset" class="btn btn-default" value="Reset">
-            </div>
+    <div class="container">
+
+        <div class="row">
+            <h2>Sign Up</h2>
+            <p>Please fill this form to create an account.</p>
+        </div>
+
+
+        <div class="container-fluid justify-content-around">
+            <div class="row">
+            <div class="row align-items-center align-self-center">
+                <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12 login-form-1">
+                    <form action="signup" method="post" id="">
+                        <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
+                            <label>Username</label>
+                            <input type="text" name="username" class="form-control" value="<?php echo $username; ?>">
+                            <span class="help-block"><?php echo $username_err; ?></span>
+                        </div>    
+                        <div class="form-group <?php echo (!empty($nome_err)) ? 'has-error' : ''; ?>">
+                            <label>nome</label>
+                            <input type="text" name="nome" class="form-control" value="<?php echo $nome; ?>">
+                            <span class="help-block"><?php echo $nome_err; ?></span>
+                        </div> 
+                        <div class="form-group <?php echo (!empty($cognome_err)) ? 'has-error' : ''; ?>">
+                            <label>cognome</label>
+                            <input type="text" name="cognome" class="form-control" value="<?php echo $cognome; ?>">
+                            <span class="help-block"><?php echo $cognome_err; ?></span>
+                        </div>     
+                        <div class="form-group <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
+                            <label>email</label>
+                            <input type="text" name="email" class="form-control" value="<?php echo $email; ?>">
+                            <span class="help-block"><?php echo $email_err; ?></span>
+                        </div>   
+                        <div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
+                            <label>Password</label>
+                            <input type="password" name="password" class="form-control" value="<?php echo $password; ?>">
+                            <span class="help-block"><?php echo $password_err; ?></span>
+                        </div>
+                        <div class="form-group <?php echo (!empty($confirm_password_err)) ? 'has-error' : ''; ?>">
+                            <label>Confirm Password</label>
+                            <input type="password" name="confirm_password" class="form-control" value="<?php echo $confirm_password; ?>">
+                            <span class="help-block"><?php echo $confirm_password_err; ?></span>
+                        </div>
+
+                        <div class="form-group">
+                            
+                        <div class="container-checkbox">
+                            <input class="input" type="radio" id="test1" name="radio-group" checked hidden>
+                            <label class="btn" for="test1">Lettore</label>
+                            <span class="span"></span>
+                        </div>
+                        <div class="container-checkbox">
+                            <input class="input" type="radio" id="test2" name="radio-group" hidden>
+                            <label class="btn" for="test2">Casa editrice</label>
+                            <span class="span"></span>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary" value="Submit">
+                            <input type="reset" class="btn btn-default" value="Reset">
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>  
+        </div>
+
+        <div class="row">
             <p>Hai già un account? <a href="login">Login</a>.</p>
-        </form>
-    </div>    
+        </div>
+    </div>
 </body>
 </html>

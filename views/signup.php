@@ -1,3 +1,4 @@
+
 <?php
 // Include config file
 require_once "config.php";
@@ -112,7 +113,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $confirm_password_err = "Password did not match.";
         }
     }
-
     // Check input errors before inserting in database
     if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($email_err) && empty($nome_err) && empty($cognome_err))
     {

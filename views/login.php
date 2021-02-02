@@ -61,11 +61,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
                 $exe = $stmt->execute();
 
-                if($exe){
-                    $stmt->fetch();
-
-
-                }
             }
 
             // Close statement

@@ -11,7 +11,6 @@ $username_err = $password_err = $confirm_password_err = $email_err = $nome_err =
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
  
-    $password = $_POST['password'];
 
     // Validate username
     if(empty(trim($_POST["username"]))){
@@ -69,8 +68,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 
                 if(password_verify($password,$hash)){
+
                     $time = new DateTime();
                     $time->getTimestamp();
+
+
+                    $expire = empty($_POST['remember']) ? (time() + (60 * 60 * 24)) : (time() + (60 * 60 * 24 * 14));
+
+                    echo $expire;   
 
 
                     $data = [
@@ -86,10 +91,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         ],
                         'login_timestamp' => $time
                     ];
-                    setcookie('user',base64_encode(serialize($data)), '', '', '', '', 'true');
+                    setcookie('user',base64_encode(serialize($data)), $expire, '', '', '', 'true');
                     session_start();
                     $_SESSION['logged_in']=true;
 
+                } else {
+                    $password_err = "password errata";
                 }
 
             }
@@ -116,7 +123,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         <div class="row">
             <h2>Login</h2>
-            <p>Se non sei ancora registrato allora <a href="Bookique_animaniacs/signup"><u>fallo ora!</u></a></p>
+            <p>Se non sei ancora registrato allora <a href="/signup"><u>fallo ora!</u></a></p>
         </div>
 
 
@@ -138,8 +145,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             <span class="help-block"><?php echo $password_err; ?></span>
                         </div> 
 
+                        <div class="form-group">
+                            <input type="checkbox" name="remember" class="" value="true"><label>Remember me</label>
+                        </div>
+
                         <div>
-                            <p>password dimenticata?</p><a href="/recovery">recuperala!</a>
+                            password dimenticata? <a href="/recovery">recuperala!</a>
                         </div>
 
 

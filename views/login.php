@@ -53,13 +53,44 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             }
 
             if(empty($username_err) && empty($password_err)) {
-                $sql = "SELECT password FROM users WHERE username = ?";
+                $sql = "SELECT user_id, username, email, password, nome, cognome, ut_type, status FROM users WHERE username = ?";
+
 
                 $stmt = $link->prepare($sql);
                 
                 $stmt->bind_param("s", $param_username);
 
-                $exe = $stmt->execute();
+                $stmt->execute();
+
+
+                $stmt->bind_result($user_id, $username, $email, $hash, $nome, $cognome, $ut_type, $status);
+
+                $stmt->fetch();
+
+
+                if(password_verify($password,$hash)){
+                    $time = new DateTime();
+                    $time->getTimestamp();
+
+
+                    $data = [
+                        'logged_in' => true,
+                        'data' => [
+                            'user_id' => $user_id,
+                            'username' => $username,
+                            'email' => $email,
+                            'nome' => $nome,
+                            'cognome' => $cognome,
+                            'ut_type' => $ut_type,
+                            'status' => $ut_type
+                        ],
+                        'login_timestamp' => $time
+                    ];
+                    setcookie('user',base64_encode(serialize($data)), '', '', '', '', 'true');
+                    session_start();
+                    $_SESSION['logged_in']=true;
+
+                }
 
             }
 
@@ -85,7 +116,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         <div class="row">
             <h2>Login</h2>
-            <p>Se non sei ancora registrato allora <a href="/signup"><u>fallo ora!</u></a></p>
+            <p>Se non sei ancora registrato allora <a href="Bookique_animaniacs/signup"><u>fallo ora!</u></a></p>
         </div>
 
 
@@ -101,10 +132,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             <span class="help-block"><?php echo $username_err; ?></span>
                         </div>    
                         
-                        <div class="form-group <?php echo (!empty($nome_err)) ? 'has-error' : ''; ?>">
+                        <div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
                             <label>password</label>
                             <input type="password" name="password" class="form-control" value="<?php echo $password; ?>">
-                            <span class="help-block"><?php echo $nome_err; ?></span>
+                            <span class="help-block"><?php echo $password_err; ?></span>
                         </div> 
 
                         <div>

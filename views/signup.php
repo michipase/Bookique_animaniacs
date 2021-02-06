@@ -214,7 +214,7 @@ $isEditor=false;
                             </div>
 
                             <div class="container-checkbox">
-                                <input class="input" type="radio" id="test2" name="role-radio" false="1" hidden>
+                                <input class="input" type="radio" id="test2" name="role-radio" value="1" hidden>
                                 <label class="btn" for="test2">Casa editrice</label>
                                 <span class="span"></span>
                             </div>

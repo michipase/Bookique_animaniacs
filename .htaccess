@@ -2,8 +2,8 @@ RewriteEngine on
 
 RewriteBase /
 
-RewriteCond %{REQUEST_FILENAME} !-l
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !\.(?:jpe?g|gif|bmp|png|tiff|css|js)$ [NC]
 
 RewriteRule ^(.*)$ /Bookique_animaniacs/index.php [QSA,L]

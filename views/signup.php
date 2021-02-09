@@ -33,7 +33,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             
                 mysqli_stmt_store_result($stmt);
                 
-                if(mysqli_stmt_num_rows($stmt) == 1){
+                if(mysqli_stmt_num_rows($stmt) == 1) {
                     $username_err = "This username is already taken.";
                 } else{
                     $username = trim($_POST["username"]);
@@ -113,7 +113,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $confirm_password_err = "Password did not match.";
         }
     }
-// Check input errors before inserting in database
+    // Check input errors before inserting in database
     if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($email_err) && empty($nome_err) && empty($cognome_err))
     {
         // Prepare an insert statement
@@ -201,7 +201,7 @@ $isEditor=false;
                         </div>
                         <div class="form-group <?php echo (!empty($confirm_password_err)) ? 'has-error' : ''; ?>">
                             <label>Confirm Password</label>
-<input type="password" name="confirm_password" class="form-control" value="<?php echo $confirm_password; ?>">
+                            <input type="password" name="confirm_password" class="form-control" value="<?php echo $confirm_password; ?>">
                             <span class="help-block"><?php echo $confirm_password_err; ?></span>
                         </div>
 
@@ -214,7 +214,7 @@ $isEditor=false;
                             </div>
 
                             <div class="container-checkbox">
-                                <input class="input" type="radio" id="test2" name="role-radio" false="1" hidden>
+                                <input class="input" type="radio" id="test2" name="role-radio" value="1" hidden>
                                 <label class="btn" for="test2">Casa editrice</label>
                                 <span class="span"></span>
                             </div>

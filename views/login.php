@@ -1,6 +1,6 @@
 <?php
 // Include config file
-require_once "config.php";
+require_once __DIR__."/../utils/config.php";
  
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = $email = $nome = $cognome ="";
@@ -94,6 +94,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     setcookie('user',base64_encode(serialize($data)), $expire, '', '', '', 'true');
                     session_start();
                     $_SESSION['logged_in']=true;
+                    header("location: home");
 
                 } else {
                     $password_err = "password errata";
@@ -123,7 +124,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         <div class="row">
             <h2>Login</h2>
-            <p>Se non sei ancora registrato allora <a href="/signup"><u>fallo ora!</u></a></p>
+            <p>Se non sei ancora registrato allora <a href="./signup"><u>fallo ora!</u></a></p>
         </div>
 
 
@@ -150,7 +151,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         </div>
 
                         <div>
-                            password dimenticata? <a href="/recovery">recuperala!</a>
+                            password dimenticata? <a href="./recovery">recuperala!</a>
                         </div>
 
 

@@ -17,7 +17,7 @@ $route = [
         'url' => '/login'
     ],
     'signup' => [
-        'path' => './views/signup.php',
+        'path' => './views/lettore.php',
         'url' => '/signup'
     ],
     'logout' => [

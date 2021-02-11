@@ -49,7 +49,7 @@ switch ($request) {
         break;
     
     case '/signup':
-        require './views/signup.php';
+        require './views/lettore.php';
         break;
 
     case '/logout':

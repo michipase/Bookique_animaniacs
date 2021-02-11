@@ -4,8 +4,8 @@
 require_once __DIR__."/../utils/config.php";
  
 // Define variables and initialize with empty values
-$username = $password = $confirm_password = $email = $nome = $cognome = $sede = $azienda = "";
-$username_err = $password_err = $confirm_password_err = $email_err = $nome_err = $cognome_err = $sede_err = $azienda_err = "";
+$username = $password = $confirm_password = $email = $nome = $cognome = $sede = $azienda = $domanda = $risposta = "";
+$username_err = $password_err = $confirm_password_err = $email_err = $nome_err = $cognome_err = $sede_err = $azienda_err = $domanda_err = $risposta_err = "";
  
 
 
@@ -127,17 +127,31 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $confirm_password_err = "Password did not match.";
         }
     }
+
+    //create a domanda for password recovery
+    if(empty(trim($_POST["domanda"]))){
+        $domanda_err = "Please enter a domanda recovery.";
+    }else{
+        $domanda = trim($_POST["domanda"]);
+    }
+
+    //create a answer for the domanda
+    if(empty(trim($_POST["risposta"]))){
+        $risposta_err = "Please enter a domanda recovery.";
+    }else{
+        $risposta = trim($_POST["risposta"]);
+    }
 // Check input errors before inserting in database
-if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($email_err) && empty($nome_err) && empty($cognome_err))
+if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($email_err) && empty($nome_err) && empty($cognome_err) && empty($domanda_err) && empty($risposta_err))
 {
     // Prepare an insert statement
-    $sql = "INSERT INTO users (username, email, password, nome, cognome, ut_type) VALUES (?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO users (username, email, password, nome, cognome, domanda, risposta, ut_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $sql2 = "INSERT INTO casa_editrice (nome, sede) VALUES (?, ?)";
     
 
     $stmt = $link->prepare($sql);
     // Bind variables to the prepared statement as parameters
-    $stmt->bind_param("sssssi", $param_username, $param_email, $param_password, $param_nome, $param_cognome, $param_role );
+    $stmt->bind_param("sssssssi", $param_username, $param_email, $param_password, $param_nome, $param_cognome, $param_domanda, $param_risposta, $param_role );
    
     $stmt2 = $link2->prepare($sql2);
 
@@ -151,6 +165,8 @@ if(empty($username_err) && empty($password_err) && empty($confirm_password_err) 
     $param_role = 1;
     $param_azienda = $azienda;
     $param_sede = $sede;
+    $param_domanda = password_hash($domanda, PASSWORD_DEFAULT);
+    $param_risposta = password_hash($risposta, PASSWORD_DEFAULT);
     
     mysqli_multi_query($link, $sql);
     mysqli_multi_query($link2, $sql2);
@@ -240,6 +256,16 @@ $isEditor=true;
                             <input type="password" name="confirm_password" class="form-control" value="<?php echo $confirm_password; ?>">
                             <span class="help-block"><?php echo $confirm_password_err; ?></span>
                         </div>
+                        <div class="form-group <?php echo (!empty($domanda_err)) ? 'has-error' : ''; ?>">
+                            <label>domanda</label>
+                            <input type="text" name="domanda" class="form-control" value="<?php echo $domanda; ?>">
+                            <span class="help-block"><?php echo $domanda_err; ?></span>
+                        </div> 
+                        <div class="form-group <?php echo (!empty($risposta_err)) ? 'has-error' : ''; ?>">
+                            <label>risposta</label>
+                            <input type="text" name="risposta" class="form-control" value="<?php echo $risposta; ?>">
+                            <span class="help-block"><?php echo $risposta_err; ?></span>
+                        </div> 
 
                         <div class="form-group">
                             

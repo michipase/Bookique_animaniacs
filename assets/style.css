@@ -7,9 +7,13 @@
 *{
     margin: 0;
     padding: 0;
+    background-color: none;
+    background: none;
 }
 
-body{ font: 14px sans-serif; }
+body{
+  font: 14px sans-serif;
+}
 
 .container-checkbox {
     padding: calc(1rem + 6px) calc(1rem + 12px);

@@ -91,9 +91,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         ],
                         'login_timestamp' => $time
                     ];
-                    setcookie('user',base64_encode(serialize($data)), $expire, '', '', '', 'true');
-                    session_start();
-                    $_SESSION['logged_in']=true;
+
+                    setcookie('user',base64_encode(serialize($data)), $expire, '', '', '', true);
+                    $_SESSION['user'] = $data;
                     header("location: home");
 
                 } else {

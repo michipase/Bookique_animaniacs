@@ -1,4 +1,5 @@
 <?php
+        session_start();
 
 $request = $_SERVER['REQUEST_URI'];
 $request = str_replace('Bookique_animaniacs/', '', $request);
@@ -54,6 +55,7 @@ switch ($request) {
 
     case '/logout':
         require './views/logout.php';
+        break;
 
     case '/landing' :
         require './views/landing.php';

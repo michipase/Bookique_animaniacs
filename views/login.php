@@ -5,11 +5,9 @@ require_once __DIR__."/../utils/config.php";
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = $email = $nome = $cognome ="";
 $username_err = $password_err = $confirm_password_err = $email_err = $nome_err = $cognome_err = "";
- 
-
 
 // Processing form data when form is submitted
-if($_SERVER["REQUEST_METHOD"] == "POST"){
+if($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_COOKIE['user'])){
  
 
     // Validate username
@@ -91,9 +89,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         ],
                         'login_timestamp' => $time
                     ];
-                    setcookie('user',base64_encode(serialize($data)), $expire, '', '', '', 'true');
-                    session_start();
-                    $_SESSION['logged_in']=true;
+
+                    setcookie('user',base64_encode(serialize($data)), $expire, '', '', '', true);
+                    $_SESSION['user'] = $data;
                     header("location: home");
 
                 } else {
@@ -109,6 +107,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     // Close connection
     mysqli_close($link);
+} else {
+    if(isset($_COOKIE['user'])) {
+        header('location: home');
+    }
 }
 
 ?>

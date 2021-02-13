@@ -1,3 +1,10 @@
+<?php
+    // Include config file
+    require_once __DIR__."/../utils/config.php";
+    requiresAuth([0,1,2]);
+    
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +13,13 @@
     <title>Home</title>
 </head>
 <body>
-    HOME
+    <div class="container">
+        <div class="container-fluid">
+            <div class="row">
+                sei nella home<br>
+                devi esserne fiero :)
+            </div>
+        </div>
+    </div>
 </body>
 </html>

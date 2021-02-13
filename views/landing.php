@@ -1,3 +1,8 @@
+<?php
+    require_once __DIR__."/../utils/config.php";
+
+?>
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -6,6 +11,18 @@
     <title>Landing</title>
 </head>
 <body>
-    QUESTA È LA LANDING PAGE BRAAAA!
+    <div class="container">
+        <div class="d-flex p-6">
+            Ciao, siamo un gruppo di bravi ragazzi che non vuole assolutamente che i dati del proprio database vengano rubati.
+            
+            
+            <!-- nobody sees this -->
+            <div style="visibility: hidden" class="btn btn-danger">in realtà siamo scarsi e ci bucheranno tutti</div>
+        </div>
+        <hr>
+
+
+
+    </div>
 </body>
 </html>

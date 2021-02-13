@@ -16,6 +16,8 @@
     <div class="container">
         <div class="container-fluid">
             <div class="row">
+                sei nella home<br>
+                devi esserne fiero :)
             </div>
         </div>
     </div>

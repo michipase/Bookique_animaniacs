@@ -2,12 +2,13 @@
     require_once __DIR__."/../utils/config.php";
 
 
-    if($_COOKIE['user'] && $_SESSION['user']) {
-
+    try {
         unset($_COOKIE['user']); 
         unset($_SESSION['user']);
 
         header('location: landing');
-    } 
+    } catch (\Throwable $th) {
+        header('location: landing');
+    }
   
 ?>

@@ -1,6 +1,5 @@
 <?php
-    /* Database credentials. Assuming you are running MySQL
-    server with default setting (user 'root' with no password) */
+
     define('DB_SERVER', 'localhost');
     define('DB_USERNAME', 'root');
     define('DB_PASSWORD', '');
@@ -14,12 +13,16 @@
         die("ERROR: Could not connect. " . mysqli_connect_error());
     }
 
+    /**
+     * @param x - requires and array of authenticated roles. ex [0,1] -> 0 = admin, 1 = editor. 2(reader) i not allowed
+     */
     function requiresAuth($x = []) {
-        $ut_type = unserialize(base64_decode($_COOKIE['user']['data']['ut_type']));
-        print_r($ut_type);
+
+        $ut_type = unserialize(base64_decode($_COOKIE['user']))['data']['ut_type'];
 
         if(!empty($x) && !in_array($ut_type, $x, true)){
-            header('location: login');
+            header('location: 401');
+            echo 'not allowed';
         }
     }
 ?>

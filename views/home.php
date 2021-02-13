@@ -1,9 +1,7 @@
 <?php
     // Include config file
     require_once __DIR__."/../utils/config.php";
-
-    requiresAuth()
-
+    requiresAuth([0,1,2]);
     
 ?>
 

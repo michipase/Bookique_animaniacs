@@ -1,39 +1,8 @@
 <?php
-        session_start();
+session_start();
 
 $request = $_SERVER['REQUEST_URI'];
 $request = str_replace('Bookique_animaniacs/', '', $request);
-
-$route = [
-    'landing' => [
-        'path' => './views/landing.php',
-        'url' => '/'
-    ],
-    'about' => [
-        'path' => './views/about.php',
-        'url' => '/about'
-    ],
-    'login' => [
-        'path' => './views/login.php',
-        'url' => '/login'
-    ],
-    'signup' => [
-        'path' => './views/signup.php',
-        'url' => '/signup'
-    ],
-    'logout' => [
-        'path' => './views/logout.php',
-        'url' => '/logout'
-    ],
-    'landing' => [
-        'path' => './views/landing.php',
-        'url' => '/landing'
-    ],
-    'home' => [
-        'path' => './views/home.php',
-        'url' => '/home'
-    ],
-];
 
 
 switch ($request) {
@@ -63,6 +32,10 @@ switch ($request) {
 
     case '/home' :
         require './views/home.php';
+        break;
+    
+    case '/401' :
+        require './views/401.php';
         break;
 
     

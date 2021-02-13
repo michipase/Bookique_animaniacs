@@ -6,6 +6,7 @@
     <title>Bookique | 404</title>
 </head>
 <body>
-    mi dispiace ma qui sei su 404 mi chiamo michele
+    THIS PAGE IS NO LONGER AVAILABLE<br>
+    Err[404]: resource not found
 </body>
 </html>

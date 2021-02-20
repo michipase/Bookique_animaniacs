@@ -180,20 +180,12 @@ $isEditor=true;
 
 ?>
  
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Sign Up</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
-</head>
-<body>
+
     <div class="container">
 
         <div class="row">
             <h2>Sign Up</h2>
-            <p>Please fill this form to create an account.</p>
+            <p>Riempi questo form per creare un account</p>
         </div>
 
 
@@ -273,5 +265,3 @@ $isEditor=true;
             <p>Hai già un account? <a href="<?php echo "/login";?>">Login</a>.</p>
         </div>
     </div>
-</body>
-</html>

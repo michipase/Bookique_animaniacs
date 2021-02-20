@@ -1,8 +1,10 @@
 
 <?php
 // Include config file
-require_once __DIR__."/../utils/config.php";
- 
+$titolo = 'Bookique - Signup';
+require_once UTILS_DIR . 'config.php';
+include ASSETS_DIR . 'asset.php';
+
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = $email = $nome = $cognome ="";
 $username_err = $password_err = $confirm_password_err = $email_err = $nome_err = $cognome_err = "";
@@ -153,18 +155,13 @@ $isEditor=false;
 
 
 ?>
- 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Sign Up</title>
-</head>
-<body>
+
+<section class="banner" role="banner">
+    <h1>Sign Up</h1>
     <div class="container">
 
         <div class="row">
-            <h2>Sign Up</h2>
+
             <p>Please fill this form to create an account.</p>
         </div>
 
@@ -172,7 +169,7 @@ $isEditor=false;
         <div class="container-fluid justify-content-around">
             <div class="row">
             <div class="row align-items-center align-self-center">
-                <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12 login-form-1">
+                <div class="login-form-1 col-md-12">
                     <form action="signup" method="post" id="">
                         <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
                             <label>Username</label>
@@ -235,5 +232,5 @@ $isEditor=false;
             <p>Hai già un account? <a href="login">Login</a>.</p>
         </div>
     </div>
-</body>
-</html>
+    </div>
+</section>

@@ -1,0 +1,224 @@
+body {
+    color: #878787;
+    background-color: #0c5460 !important;
+    font-family: Roboto, sans-serif;
+    left: 0;
+    line-height: 1.35;
+    margin: 0;
+    padding: 0;
+    overflow: scroll;
+    position: relative;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    transition: left 0.3s ease-in-out;
+}
+
+/*Inizio del CSS per l'header*/
+.container {
+    margin: auto;
+    width: 1000px;
+}
+
+a {text-decoration: none;}
+
+ul {
+    padding-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+nav {
+    background: #CDF7F6;
+    font-size: 0;
+    position: relative;
+    z-index: 9;
+}
+
+nav > ul > li {
+    display: inline-block;
+    font-size: 14px;
+    padding: 0 15px;
+    position: relative;
+}
+
+nav > ul > li > a {
+    color: #181114;
+    display: block;
+    padding: 20px 0;
+    border-bottom: 3px solid transparent;
+    transition: all .3s ease;
+}
+nav > ul > li:hover > a {
+    color: #6B2D5C;
+    border-bottom: 3px solid #444;
+}
+
+.mega-menu {
+    background: #eee;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s linear;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    padding-bottom: 20px;
+}
+.mega-menu h3 {color: #F5DFBB;}
+
+.mega-menu .container {
+    display: flex;
+}
+.mega-menu .item {
+    flex-grow: 1;
+    margin: 0 10px;
+}
+.mega-menu .item img {
+    width: 100%;
+}
+.mega-menu a {
+    border-bottom: 1px solid #ddd;
+    color: #4ea3d8;
+    display: block;
+    padding: 10px 0;
+}
+.mega-menu a:hover {color: #2d6a91;}
+
+
+.dropdown {position: static;}
+
+.dropdown:hover .mega-menu {
+    visibility: visible;
+    opacity: 1;
+}
+
+/*Fine del CSS per l'header*/
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    color: #fff;
+    padding: 3em 5%;
+    position: relative;
+    width: 90%;
+
+}
+
+.banner {
+    box-sizing: border-box;
+    left: 0;
+    padding: 5em 0;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+.banner h1 {
+    color: #fff;
+    font-family: "Dancing Script";
+    font-size: 4.375rem;
+    margin-bottom: 1em;
+}
+.banner h2{
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 300;
+    line-height: 1.5;
+    margin: 0 auto;
+    width: 50%;
+}
+.banner p{
+    color: #fff;
+    font-size: 1.3rem;
+    font-weight: 300;
+    line-height: 1.5;
+    margin: 20px auto;
+    width: 50%;
+}
+
+.container:before, header:before, .menu-toggle:before, .container:after, header:after, .menu-toggle:after {
+    content: "";
+    display: table;
+}
+
+.container:after, header:after, .menu-toggle:after {
+    clear: both;
+}
+
+/*login style*/
+.login-container{
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+.login-form-1{
+    padding: 5%;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+    background-color: white;
+    border-radius: 10px;
+}
+.login-form-1 h3{
+    text-align: center;
+    color: #333;
+}
+.login-form-2{
+    padding: 5%;
+    background: #0062cc;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+}
+.login-form-2 h3{
+    text-align: center;
+    color: #fff;
+}
+.login-container form{
+    padding: 10%;
+}
+.btnSubmit
+{
+    width: 50%;
+    border-radius: 1rem;
+    padding: 1.5%;
+    border: none;
+    cursor: pointer;
+}
+.login-form-1 .btnSubmit{
+    font-weight: 600;
+    color: #fff;
+    background-color: #0062cc;
+}
+.login-form-2 .btnSubmit{
+    font-weight: 600;
+    color: #0062cc;
+    background-color: #fff;
+}
+.login-form-2 .ForgetPwd{
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+}
+.login-form-1 .ForgetPwd{
+    color: #0062cc;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+/*tabelle dell'anterpima del caricamento csv*/
+.table td.text {
+    max-width: 177px;
+}
+.table td.text span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    max-width: 100%;
+}
+
+/*footer*/
+.footer{
+    background-color: #181114;
+    padding: 10%;
+}

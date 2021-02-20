@@ -1,8 +1,10 @@
 
 <?php
 // Include config file
-require_once __DIR__."/../utils/config.php";
- 
+$titolo = 'Bookique - Lettore';
+require_once UTILS_DIR . 'config.php';
+include ASSETS_DIR . 'asset.php';
+
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = $email = $nome = $cognome ="";
 $username_err = $password_err = $confirm_password_err = $email_err = $nome_err = $cognome_err = "";
@@ -175,7 +177,7 @@ $isEditor=false;
             <div class="row">
             <div class="row align-items-center align-self-center">
                 <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12 login-form-1">
-                    <form action="/Bookique_animaniacs/views/lettore.php" method="post" id="">
+                    <form action="<?php echo VIEWS_DIR ?>lettore.php" method="post" id="">
                         <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
                             <label>Username</label>
                             <input type="text" name="username" class="form-control" value="<?php echo $username; ?>">
@@ -211,13 +213,13 @@ $isEditor=false;
                             
                             <div class="container-checkbox">
                                 <input class="input" type="radio" id="test1" name="role-radio" value="2" checked hidden>
-                                <label class="btn" for="test1"><a href="/Bookique_animaniacs/views/lettore.php">Lettore</a></label>
+                                <label class="btn" for="test1"><a href="<?php echo VIEWS_DIR ?>lettore.php">Lettore</a></label>
                                 <span class="span"></span>
                             </div>
 
                             <div class="container-checkbox">
                                 <input class="input" type="radio" id="test2" name="role-radio" false="1" hidden>
-                                <label class="btn" for="test2"><a href="/Bookique_animaniacs/views/casa_editrice.php">Casa editrice</a></label>
+                                <label class="btn" for="test2"><a href="<?php echo VIEWS_DIR ?>casa_editrice.php">Casa editrice</a></label>
                                 <span class="span"></span>
                             </div>
                         </div>
@@ -234,7 +236,7 @@ $isEditor=false;
         </div>
 
         <div class="row">
-            <p>Hai già un account? <a href="/Bookique_animaniacs/login">Login</a>.</p>
+            <p>Hai già un account? <a href="<?php echo "/login";?>">Login</a>.</p>
         </div>
     </div>
 </body>

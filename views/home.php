@@ -1,19 +1,17 @@
 <?php
-    // Include config file
-    require_once __DIR__."/../utils/config.php";
+// Include config file
+$titolo = 'Bookique - Home';
+require_once UTILS_DIR . 'config.php';
+include ASSETS_DIR . 'asset.php';
     requiresAuth([0,1,2]);
     
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-</head>
-<body>
-    <div class="container">
+<?php
+include('assets/asset.php');
+?>
+<section class="banner" role="banner">
+    <div class="container login-container login-form-1">
         <div class="container-fluid">
             <div class="row">
                 sei nella home<br>
@@ -21,5 +19,5 @@
             </div>
         </div>
     </div>
-</body>
-</html>
+</section>
+

@@ -177,17 +177,17 @@ $isEditor=false;
                             <span class="help-block"><?php echo $username_err; ?></span>
                         </div>    
                         <div class="form-group <?php echo (!empty($nome_err)) ? 'has-error' : ''; ?>">
-                            <label>nome</label>
+                            <label>Nome</label>
                             <input type="text" name="nome" class="form-control" value="<?php echo $nome; ?>">
                             <span class="help-block"><?php echo $nome_err; ?></span>
                         </div> 
                         <div class="form-group <?php echo (!empty($cognome_err)) ? 'has-error' : ''; ?>">
-                            <label>cognome</label>
+                            <label>Cognome</label>
                             <input type="text" name="cognome" class="form-control" value="<?php echo $cognome; ?>">
                             <span class="help-block"><?php echo $cognome_err; ?></span>
                         </div>     
                         <div class="form-group <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
-                            <label>email</label>
+                            <label>Email</label>
                             <input type="text" name="email" class="form-control" value="<?php echo $email; ?>">
                             <span class="help-block"><?php echo $email_err; ?></span>
                         </div>   
@@ -197,13 +197,12 @@ $isEditor=false;
                             <span class="help-block"><?php echo $password_err; ?></span>
                         </div>
                         <div class="form-group <?php echo (!empty($confirm_password_err)) ? 'has-error' : ''; ?>">
-                            <label>Confirm Password</label>
+                            <label>Conferma password</label>
                             <input type="password" name="confirm_password" class="form-control" value="<?php echo $confirm_password; ?>">
                             <span class="help-block"><?php echo $confirm_password_err; ?></span>
                         </div>
 
                         <div class="form-group">
-                            
                             <div class="container-checkbox">
                                 <input class="input" type="radio" id="test1" name="role-radio" value="2" checked hidden>
                                 <label class="btn" for="test1">Lettore</label>

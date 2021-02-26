@@ -65,11 +65,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_COOKIE['user'])){
 
                     $expire = empty($_POST['remember']) ? (time() + (60 * 60 * 24)) : (time() + (60 * 60 * 24 * 14));
 
-                    echo $expire;   
+                    echo $expire;
+
+                    if ($ut_type == 0 || $ut_type == 1) $enable_upload = 1;
+                    else $enable_upload = 0;
 
 
                     $data = [
                         'logged_in' => true,
+                        'enable_upload' => $enable_upload,
                         'data' => [
                             'user_id' => $user_id,
                             'username' => $username,
@@ -84,6 +88,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_COOKIE['user'])){
 
                     setcookie('user',base64_encode(serialize($data)), $expire, '', '', '', true);
                     $_SESSION['user'] = $data;
+
                     header("location: home");
 
                 } else {

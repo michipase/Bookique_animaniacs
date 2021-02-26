@@ -17,10 +17,7 @@
         <li class='dropdown'>
             <a href='<?php echo "/about";?>'>About <i class="fa fa-angle-down"></i></a>
         </li><!-- /.dropdown -->
-        <li class='dropdown'>
-            <a href='upload'>Books <i class="fa fa-angle-down"></i> </a>
 
-        </li><!-- .dropdown -->
         <li><a href='<?php echo "/login";?>'>Login</a></li>
     </ul><!-- .container -->
 </nav>

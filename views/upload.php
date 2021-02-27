@@ -13,25 +13,26 @@ if (isset($_SESSION['user']['enable_upload']) && $_SESSION['user']['enable_uploa
             <h1>Upload</h1>
             <div class="container login-container login-form-1">
                 <div class="row">
+
                     <div class="col-md-6">
                         <h3>Anteprima dell'XML</h3>
                     </div>
 
                     <table class="table table-striped">
                         <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Titolo</th>
-                            <th scope="col">Autore</th>
-                            <th scope="col">Casa Editrice</th>
-                            <th scope="col">Categoria</th>
-                            <th scope="col">Tipologia</th>
-                            <th scope="col">Prezzo</th>
-                            <th scope="col">Descrizione</th>
-                            <th scope="col">ISBN</th>
-                            <th scope="col">N. Pagine</th>
-                            <th scope="col">Quantità</th>
-                        </tr>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Titolo</th>
+                                <th scope="col">Autore</th>
+                                <th scope="col">Casa Editrice</th>
+                                <th scope="col">Categoria</th>
+                                <th scope="col">Tipologia</th>
+                                <th scope="col">Prezzo</th>
+                                <th scope="col">Descrizione</th>
+                                <th scope="col">ISBN</th>
+                                <th scope="col">N. Pagine</th>
+                                <th scope="col">Quantità</th>
+                            </tr>
                         </thead>
                         <?php
 
@@ -89,31 +90,8 @@ if (isset($_SESSION['user']['enable_upload']) && $_SESSION['user']['enable_uploa
 
 //Se è sttato premuto il pulsate 'Salva i nuovi libri' richiamo la funzione che li caricherà sul database
     }elseif(isset($_POST['saveDataToDatabase'])){
-        uploadToDatabase( $_SESSION['archivio']);
 
-//Visualizzo il form per caricare il file se non è stato premuto il pulsante di submit
-    }else{
-        ?>
-        <section class="banner" role="banner">
-            <h1>Upload</h1>
-            <div class="container login-container login-form-1">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h3>Seleziona l'XML da caricare</h3>
-                        <form action="upload" method="post" enctype="multipart/form-data">
-                            <input type="file" name="xmlfile" id="xmlCatalogo" class="btn-block btn" required>
-                            <input type="submit" value="Anteprima del caricamento" name="submitxml" class="btnSubmit" style="width: 270px; margin-top: 30px; left: 0;">
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <?php
-    }
-
-//Una volta visualizzata l'anteprima dell'xml si passa al caricamento su database
-    function uploadToDatabase($result){
-        require ("utils/config.php");
+        //Una volta visualizzata l'anteprima dell'xml si passa al caricamento su database
         ?>
         <section class="banner" role="banner">
             <h1>Upload</h1>
@@ -127,6 +105,7 @@ if (isset($_SESSION['user']['enable_upload']) && $_SESSION['user']['enable_uploa
 
                             //Scorro tutti i libri presenti nel xml
                             for($i = 0; $i < count($result); $i++ ){
+
                                 $sql = "INSERT INTO libro INNER JOIN casa_editrice ON libro.ce_id = casa_editrice.ce_id (titolo, autore, categoria, tipologia, n_pagine, quantity, isbn, ce_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
                                 $stmt = $link2->prepare($sql);
                                 $stmt->bind_param("ssssiisi", $result[$i][] );
@@ -134,6 +113,25 @@ if (isset($_SESSION['user']['enable_upload']) && $_SESSION['user']['enable_uploa
                             }
                         }
                         ?>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+<?php
+//Visualizzo il form per caricare il file se non è stato premuto il pulsante di submit
+    }else{
+        ?>
+        <section class="banner" role="banner">
+            <h1>Upload</h1>
+            <div class="container login-container login-form-1">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3>Seleziona l'XML da caricare</h3>
+                        <form action="upload" method="post" enctype="multipart/form-data">
+                            <input type="file" name="xmlfile" id="xmlCatalogo" class="btn-block btn" required>
+                            <input type="submit" value="Anteprima del caricamento" name="submitxml" class="btnSubmit" style="width: 270px; margin-top: 30px; left: 0;">
+                        </form>
                     </div>
                 </div>
             </div>

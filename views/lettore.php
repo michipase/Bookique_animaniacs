@@ -144,8 +144,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $param_nome = $nome;
         $param_cognome = $cognome;
         $param_role = 2;
-        $param_domanda = password_hash($domanda, PASSWORD_ARGON2I);
-        $param_risposta = password_hash($risposta, PASSWORD_ARGON2I);
+        $param_domanda = $domanda;
+        $param_risposta = password_hash($risposta, PASSWORD_DEFAULT);
         
         
         // Attempt to execute the prepared statement

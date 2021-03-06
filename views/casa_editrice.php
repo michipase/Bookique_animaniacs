@@ -165,7 +165,7 @@ if(empty($username_err) && empty($password_err) && empty($confirm_password_err) 
     $param_role = 1;
     $param_azienda = $azienda;
     $param_sede = $sede;
-    $param_domanda = password_hash($domanda, PASSWORD_DEFAULT);
+    $param_domanda = $domanda;
     $param_risposta = password_hash($risposta, PASSWORD_DEFAULT);
     
     mysqli_multi_query($link, $sql);

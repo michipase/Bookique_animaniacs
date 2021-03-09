@@ -53,7 +53,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         $stmt->bind_result($domanda);
         $stmt->fetch();
-        echo $domanda;
+        
     }
 
     mysqli_close($link);

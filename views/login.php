@@ -1,6 +1,8 @@
 <?php
 // Include config file
-require_once __DIR__."/../utils/config.php";
+$titolo = 'Bookique - Login';
+require_once UTILS_DIR . 'config.php';
+include ASSETS_DIR . 'asset.php';
  
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = $email = $nome = $cognome ="";
@@ -16,15 +18,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_COOKIE['user'])){
     } else{
         // Prepare a select statement
         $sql = "SELECT user_id FROM users WHERE username = ?";
-        
-        
+
         if($stmt = mysqli_prepare($link, $sql)){
-              // Set parameters
+            // Set parameters
             $param_username = trim($_POST["username"]);
             // Bind variables to the prepared statement as parameters
             mysqli_stmt_bind_param($stmt, "s", $param_username);
 
-            
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
                 /* store result */
@@ -43,7 +43,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_COOKIE['user'])){
             // Validate password
             if(empty(trim($_POST["password"]))){
                 $password_err = "Please enter a password.";     
-            } elseif(strlen(trim($_POST["password"])) < 1){
+            } elseif(strlen(trim($_POST["password"])) < 8){
                 $password_err = "Password must have atleast 8 characters.";
             } else{
                 $password = trim($_POST["password"]);
@@ -51,19 +51,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_COOKIE['user'])){
 
             if(empty($username_err) && empty($password_err)) {
                 $sql = "SELECT user_id, username, email, password, nome, cognome, ut_type, status FROM users WHERE username = ?";
-
-
                 $stmt = $link->prepare($sql);
-                
                 $stmt->bind_param("s", $param_username);
-
                 $stmt->execute();
-
-
                 $stmt->bind_result($user_id, $username, $email, $hash, $nome, $cognome, $ut_type, $status);
-
                 $stmt->fetch();
-
 
                 if(password_verify($password,$hash)){
 
@@ -73,11 +65,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_COOKIE['user'])){
 
                     $expire = empty($_POST['remember']) ? (time() + (60 * 60 * 24)) : (time() + (60 * 60 * 24 * 14));
 
-                    echo $expire;   
+                    echo $expire;
+
+                    if ($ut_type == 0 || $ut_type == 1) $enable_upload = 1;
+                    else $enable_upload = 0;
 
 
                     $data = [
                         'logged_in' => true,
+                        'enable_upload' => $enable_upload,
                         'data' => [
                             'user_id' => $user_id,
                             'username' => $username,
@@ -92,14 +88,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_COOKIE['user'])){
 
                     setcookie('user',base64_encode(serialize($data)), $expire, '', '', '', true);
                     $_SESSION['user'] = $data;
+
                     header("location: home");
 
                 } else {
                     $password_err = "password errata";
                 }
-
             }
-
             // Close statement
             mysqli_stmt_close($stmt);
         }
@@ -112,28 +107,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_COOKIE['user'])){
         header('location: home');
     }
 }
-
 ?>
  
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
+<section class="banner" role="banner">
+    <h1>Login</h1>
     <div class="container">
-
         <div class="row">
-            <h2>Login</h2>
+
             <p>Se non sei ancora registrato allora <a href="./signup"><u>fallo ora!</u></a></p>
         </div>
-
-
         <div class="container-fluid justify-content-around">
             <div class="row">
             <div class="row align-items-center align-self-center">
-                <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12 login-form-1">
+                <div class="login-form-1">
                     <form action="login" method="post">
                         
                         <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
@@ -155,8 +141,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_COOKIE['user'])){
                         <div>
                             password dimenticata? <a href="./recovery">recuperala!</a>
                         </div>
-
-
                         <div class="form-group">
                             <input type="submit" class="btn btn-primary" value="Login">
                         </div>
@@ -166,5 +150,5 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_COOKIE['user'])){
             </div>  
         </div>
     </div>
-</body>
-</html>
+    </div>
+</section>

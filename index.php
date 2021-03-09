@@ -4,57 +4,52 @@ session_start();
 $request = $_SERVER['REQUEST_URI'];
 $request = str_replace('Bookique_animaniacs/', '', $request);
 
+define('MAIN_DIR', dirname(__FILE__) . '/');
+define('UTILS_DIR', MAIN_DIR . 'utils/');
+define('ASSETS_DIR', MAIN_DIR . 'assets/');
+define('VIEWS_DIR', MAIN_DIR . 'views/');
+
+
 switch ($request) {
     case '/' :
-        require './views/landing.php';
+        require VIEWS_DIR . 'landing.php';
         break;
 
     case '/about' :
-        require './views/about.php';
+        require VIEWS_DIR . 'about.php';
         break;
 
     case '/login' :
-        require './views/login.php';
+        require VIEWS_DIR . 'login.php';
         break;
     
     case '/signup':
-        require './views/signup.php';
+        require VIEWS_DIR . 'signup.php';
         break;
 
     case '/logout':
-        require './views/logout.php';
+        require VIEWS_DIR . 'logout.php';
         break;
 
     case '/landing' :
-        require './views/landing.php';
+        require VIEWS_DIR . 'landing.php';
         break;
 
     case '/home' :
-        require './views/home.php';
+        require VIEWS_DIR . 'home.php';
         break;
     
     case '/401' :
-        require './views/401.php';
+        require VIEWS_DIR . '401.php';
         break;
 
+    case '/upload' :
+        require VIEWS_DIR . 'upload.php';
+        break;
     
     default:
         http_response_code(404);
-        require './views/404.php';
+        require VIEWS_DIR . '404.php';
         break;
 }
 ?>
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>main</title>
-
-    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
-    <link rel="stylesheet" href="assets/style.css">
-</head>
-<body>
-</body>
-</html>
